@@ -10,56 +10,56 @@
 <body>
     <div class="calc-container">
         <div class="head">
-            <h1><span>Calculadora </span>de ingresos</h1>
+            <h1><span>Calculadora </span>de ingresos orgánico</h1>
         </div>
         <div class="range">
             <div class="range_slider">
-                <input type="range" id="followersCount" min="50" max="10000" step="50">
+                <input type="range" id="followersCount" min="1000" max="1000000" step="1000" value="100000">
             </div>
             <div class="range_info">
                 <label>Número de seguidores</label>
                 <br>
-                <span id="followersCountText">5000</span>
+                <span id="followersCountText">100000</span>
             </div>
         </div>
         <div class="range">
             <div class="range_slider">
-                <input type="range" id="followersChats" min="1" max="100" value="10" step="1">
+                <input type="range" id="followersChats" min="5" max="100" value="5" step="5">
             </div>
             <div class="range_info">
                 <label>Porcentaje de chats</label>
                 <br>
-                <span id="followersChatsText">% 10</span>
+                <span id="followersChatsText">5%</span>
             </div>
         </div>
         <div class="range">
             <div class="range_slider">
-                <input type="range" id="bookingRatio" min="1" max="100" value="40" step="1">
+                <input type="range" id="bookingRatio" min="5" max="100" value="5" step="5">
             </div>
             <div class="range_info">
                 <label>Ratio de reuniones</label>
                 <br>
-                <span id="bookingRatioText">40%</span>
+                <span id="bookingRatioText">5%</span>
             </div>
         </div>
         <div class="range">
             <div class="range_slider">
-                <input type="range" id="ticketSpend" min="100" max="20000" value="500" step="100">
+                <input type="range" id="ticketSpend" min="100" max="20000" value="100" step="100">
             </div>
             <div class="range_info">
                 <label>Ticket promedio</label>
                 <br>
-                <span id="ticketSpendText"><%=currency%> 500</span>
+                <span id="ticketSpendText"><%=currency%> 100</span>
             </div>
         </div>
         <div class="range">
             <div class="range_slider">
-                <input type="range" id="leadCloseRatioRange" min="1" max="100" value="20" step="1">
+                <input type="range" id="leadCloseRatioRange" min="1" max="100" value="1" step="1">
             </div>
             <div class="range_info">
                 <label>Ratio de cierre</label>
                 <br>
-                <span id="leadCloseRatioText">20%</span>
+                <span id="leadCloseRatioText">1%</span>
             </div>
         </div>
     </div>
@@ -523,42 +523,42 @@
 
 <script>
     // Change ad spend range
-    const adSpendRange = document.getElementById('adSpendRange');
-    const adSpendText = document.getElementById('adSpendText');
+    const followersCountRange = document.getElementById('followersCount');
+    const followersCountText = document.getElementById('followersCountText');
 
-    adSpendRange.addEventListener('input', (e) => {
+    followersCountRange.addEventListener('input', (e) => {
         const value = e.target.value;
-        adSpendText.innerHTML = `<%=currency%> ${value}`;
+        followersCountText.innerHTML = `${value}`;
         updateResults();
     });
 
     // Change lead spend range
-    const leadSpendRange = document.getElementById('leadSpendRange');
-    const leadSpendText = document.getElementById('leadSpendText');
+    const followersChatsRange = document.getElementById('followersChats');
+    const followersChatsText = document.getElementById('followersChatsText');
 
-    leadSpendRange.addEventListener('input', (e) => {
+    followersChatsRange.addEventListener('input', (e) => {
         const value = e.target.value;
-        leadSpendText.innerHTML = `<%=currency%> ${value}`;
+        followersChatsText.innerHTML = `${value}%`;
         updateResults();
     });
 
     // Change lead ratio booking range
-    const leadRatioBookingRange = document.getElementById('leadRatioBookingRange');
-    const leadRatioBookingText = document.getElementById('leadRatioBookingText');
+    const bookingRatioRange = document.getElementById('bookingRatio');
+    const bookingRatioText = document.getElementById('bookingRatioText');
 
-    leadRatioBookingRange.addEventListener('input', (e) => {
+    bookingRatioRange.addEventListener('input', (e) => {
         const value = e.target.value;
-        leadRatioBookingText.innerHTML = `${value}%`;
+        bookingRatioText.innerHTML = `${value}%`;
         updateResults();
     });
 
     // Change lead lifetime value range
-    const leadLifetimeValueRange = document.getElementById('leadLifetimeValueRange');
-    const leadLifetimeValueText = document.getElementById('leadLifetimeValueText');
+    const ticketSpendRange = document.getElementById('ticketSpend');
+    const ticketSpendText = document.getElementById('ticketSpendText');
 
-    leadLifetimeValueRange.addEventListener('input', (e) => {
+    ticketSpendRange.addEventListener('input', (e) => {
         const value = e.target.value;
-        leadLifetimeValueText.innerHTML = `<%=currency%> ${value}`;
+        ticketSpendText.innerHTML = `<%=currency%> ${value}`;
         updateResults();
     });
 
@@ -580,40 +580,45 @@
 
     function updateResultsDesktop() {
         // First, get all values
-        const adSpend = adSpendRange.value;
-        const leadSpend = leadSpendRange.value;
-        const leadRatioBooking = leadRatioBookingRange.value;
-        const leadLifetimeValue = leadLifetimeValueRange.value;
+        const followers = followersCountRange.value;
+        const followersChat = followersChatsRange.value;
+        const bookingRatio = bookingRatioRange.value;
+        const ticketSpend = ticketSpendRange.value;
         const leadCloseRatio = leadCloseRatioRange.value;
 
+        console.log({
+            followers,
+            followersChat,
+            bookingRatio,
+            ticketSpend,
+            leadCloseRatio
+        })
+        
         // Second, get all elements of results
         const resultLeads = document.getElementById('resultLeads');
         const resultAgendas = document.getElementById('resultAgendas');
         const resultVentas = document.getElementById('resultVentas');
         const resultGanancia = document.getElementById('resultGanancia');
-        const resultRetorno = document.getElementById('resultRetorno');
 
         // Third, calculate results
-        const leads = adSpend / leadSpend;
-        const agendas = leads * (leadRatioBooking / 100);
-        const ventas = agendas * (leadCloseRatio / 100);
-        const ganancia = (ventas * leadLifetimeValue) - adSpend;
-        const retorno = ganancia / adSpend;
+        const leads = followers * (followersChat / 100);
+        const agendas = leads * (bookingRatio / 100);
+        const ventas = Math.round(agendas * (leadCloseRatio / 100));
+        const ganancia = ventas * ticketSpend;
 
         // Fourth, update results
         resultLeads.innerHTML = Math.round(leads);
         resultAgendas.innerHTML = Math.round(agendas);
         resultVentas.innerHTML = Math.round(ventas);
-        resultGanancia.innerHTML = `<%=currency%> ${Math.round(ganancia)}`;
-        resultRetorno.innerHTML = `${Math.round(retorno)}X`;
+        resultGanancia.innerHTML = `<%=currency%>${Math.round(ganancia)}`;
     }
 
     function updateResultsMobile() {
         // First, get all values
-        const adSpend = adSpendRange.value;
-        const leadSpend = leadSpendRange.value;
-        const leadRatioBooking = leadRatioBookingRange.value;
-        const leadLifetimeValue = leadLifetimeValueRange.value;
+        const followers = followersCountRange.value;
+        const followersChat = followersChatsRange.value;
+        const bookingRatio = bookingRatioRange.value;
+        const ticketSpend = ticketSpendRange.value;
         const leadCloseRatio = leadCloseRatioRange.value;
 
         // Second, get all elements of results
@@ -621,23 +626,21 @@
         const mResultAgendas = document.getElementById('mResultAgendas');
         const mResultVentas = document.getElementById('mResultVentas');
         const mResultGanancia = document.getElementById('mResultGanancia');
-        const mResultRetorno = document.getElementById('mResultRetorno');
 
         // Third, calculate results
-        const leads = adSpend / leadSpend;
-        const agendas = leads * (leadRatioBooking / 100);
-        const ventas = agendas * (leadCloseRatio / 100);
-        const ganancia = (ventas * leadLifetimeValue) - adSpend;
-        const retorno = ganancia / adSpend;
+        const leads = followers * (followersChat / 100);
+        const agendas = leads * (bookingRatio / 100);
+        const ventas = Math.round(agendas * (leadCloseRatio / 100));
+        const ganancia = ventas * ticketSpend;
 
         // Fourth, update results
         mResultLeads.innerHTML = Math.round(leads);
         mResultAgendas.innerHTML = Math.round(agendas);
         mResultVentas.innerHTML = Math.round(ventas);
-        mResultGanancia.innerHTML = `<%=currency%> ${Math.round(ganancia)}`;
-        mResultRetorno.innerHTML = `${Math.round(retorno)}X`;
+        mResultGanancia.innerHTML = `<%=currency%>${Math.round(ganancia)}`;
     }
 
+updateResults();
 </script>
 
 </html>

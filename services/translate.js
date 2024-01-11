@@ -46,7 +46,6 @@ exports.translateVideo = async (filename) => {
 }
 
 exports.translateText = async (text) => {
-
     console.log('Vamos a traducir el texto: ' + text);
 
     // Use chat engine to translate text, then return translation
