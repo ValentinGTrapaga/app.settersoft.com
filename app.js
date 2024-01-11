@@ -13,6 +13,8 @@ const publicTools = require('./routes/publicTools');
 
 // Define routes
 app.use('/tools/', publicTools);
+app.use('/private/', require('./routes/privateTools'));
+
 
 // Start server
 app.listen(3000, () => {

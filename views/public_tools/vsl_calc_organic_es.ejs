@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setter Soft</title>
+</head>
+
+<body>
+    <div class="calc-container">
+        <div class="head">
+            <h1><span>Calculadora </span>de ingresos</h1>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input type="range" id="followersCount" min="50" max="10000" step="50">
+            </div>
+            <div class="range_info">
+                <label>Número de seguidores</label>
+                <br>
+                <span id="followersCountText">5000</span>
+            </div>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input type="range" id="followersChats" min="1" max="100" value="10" step="1">
+            </div>
+            <div class="range_info">
+                <label>Porcentaje de chats</label>
+                <br>
+                <span id="followersChatsText">% 10</span>
+            </div>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input type="range" id="bookingRatio" min="1" max="100" value="40" step="1">
+            </div>
+            <div class="range_info">
+                <label>Ratio de reuniones</label>
+                <br>
+                <span id="bookingRatioText">40%</span>
+            </div>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input type="range" id="ticketSpend" min="100" max="20000" value="500" step="100">
+            </div>
+            <div class="range_info">
+                <label>Ticket promedio</label>
+                <br>
+                <span id="ticketSpendText"><%=currency%> 500</span>
+            </div>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input type="range" id="leadCloseRatioRange" min="1" max="100" value="20" step="1">
+            </div>
+            <div class="range_info">
+                <label>Ratio de cierre</label>
+                <br>
+                <span id="leadCloseRatioText">20%</span>
+            </div>
+        </div>
+    </div>
+    <div class="result-calc-container">
+        <!-- Table (first row title) and (second row result) -->
+        <table>
+            <tr>
+                <th>LEADS</th>
+                <th>REUNIONES</th>
+                <th>VENTAS</th>
+                <th>INGRESOS</th>
+            </tr>
+            <tr>
+                <td id="resultLeads">1000</td>
+                <td id="resultAgendas">200</td>
+                <td id="resultVentas">10</td>
+                <td id="resultGanancia"><%=currency%> 5000</td>
+            </tr>
+        </table>
+        <div class="results">
+            <div class="item">
+                <label translate="no">Leads</label>
+                <span id="mResultLeads">1000</span>
+            </div>
+            <div class="item">
+                <label>Reuniones</label>
+                <span id="mResultAgendas">200</span>
+            </div>
+            <div class="item">
+                <label>Ventas</label>
+                <span id="mResultVentas">10</span>
+            </div>
+            <div class="item">
+                <label>Ingresos</label>
+                <span id="mResultGanancia"><%=currency%> 5000</span>
+            </div>
+        </div>
+    </div>
+
+    <hr id="calc_separator">
+
+    <div class="content">
+        <div class="guarantee-banner">
+            <div class="left-side">
+                <h2>¿Qué tal una <span>garantía de devolución del 100% del dinero?</span></h2>
+                <p>¿A quién más conoces que ponga eso por escrito?</p>
+                <p>Si no ve un retorno de la inversión del 200% al trabajar con nosotros, le daremos todo su dinero sin preguntar. ¡Y te quedarás con el sistema!</p>
+            </div>
+            <div class="right-side">
+                <div class="guarantee-logo">
+                    <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/nCiFSON597KefWHupKoA/media/64a737281e4e7ba4f01246ec.png"
+                        alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-container">
+            <span class="rightReserved">© 2023 SetterSoft. All rights reserved.</span>
+            <span class="emailAccount">support@settersoft.com</span>
+        </div>
+    </div>
+</body>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+
+    }
+
+    .calc-container {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .calc-container .head {
+        width: 100%;
+    }
+
+    .calc-container .head h1 {
+        color: #0a0a0a;
+        text-align: center;
+        font-size: 24pt;
+        font-family: 'Lato', sans-serif;
+    }
+
+    .calc-container .head h1 span {
+        color: #0239d0;
+    }
+
+    /* On desktop (+1000px) */
+    @media (min-width: 1000px) {
+        .calc-container .range {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .calc-container .range .range_slider {
+            width: 400px;
+            padding: 20px;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calc-container .range .range_info {
+            width: 200px;
+            border-left: 1px solid #000000;
+            height: auto;
+            padding-left: 20px;
+        }
+    }
+
+    /* On mobile */
+    @media (max-width: 1000px) {
+        .calc-container .range {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .calc-container .range .range_slider {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calc-container .range .range_info {
+            width: 80%;
+            height: auto;
+            margin-top: 5px;
+        }
+    }
+
+    .calc-container .range .range_slider input[type=range] {
+        width: 100%;
+        height: 5px;
+        -webkit-appearance: none;
+        background-color: #0239d0;
+        outline: none;
+        border-radius: 10px;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.30);
+    }
+
+    .calc-container .range .range_slider input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 15px;
+        height: 15px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    .calc-container .range .range_slider input[type=range]::-moz-range-thumb {
+        -webkit-appearance: none;
+        width: 30px;
+        height: 30px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    .range_info label {
+        font-family: 'Prompt', sans-serif;
+        font-size: 12pt;
+        color: #0a0a0a;
+    }
+
+    .range_info span {
+        font-family: 'Prompt', sans-serif;
+        font-size: 12pt;
+        color: #0239d0;
+    }
+
+    /* Result calc table (need to be fix title with result) with flex start on rows*/
+    /* On desktop */
+    @media (min-width: 1000px) {
+        .results {
+            display: none;
+        }
+
+        .result-calc-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        /* /* Padding into TD  */
+        .result-calc-container table td {
+            padding-right: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #0239d0;
+        }
+
+        /* Padding into TH  */
+        .result-calc-container table th {
+            padding-right: 40px;
+            font-size: 10pt;
+            font-weight: 300;
+            text-align: center;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Font of all table */
+        .result-calc-container table td {
+            font-family: 'Prompt', sans-serif;
+            font-size: 22pt;
+        }
+    }
+
+    /* On mobile */
+    @media (max-width: 1000px) {
+
+        .result-calc-container table {
+            display: none;
+        }
+
+        .result-calc-container .results {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .result-calc-container .results .item {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .result-calc-container .results .item label {
+            font-family: 'Prompt', sans-serif;
+            font-size: 18pt;
+            color: #0a0a0a;
+        }
+
+        .result-calc-container .results .item span {
+            font-family: 'Prompt', sans-serif;
+            font-size: 18pt;
+            color: #0239d0;
+        }
+    }
+
+    #calc_separator {
+        width: 80%;
+        height: 1px;
+        background-color: #0239d0;
+        margin-top: 30px;
+    }
+
+    .content {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Desktop  */
+    @media(min-width: 1000px) {
+        .guarantee-banner {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .guarantee-banner .left-side {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: 50px;
+            width: 50%;
+        }
+
+        .guarantee-banner .left-side h2 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 22pt;
+            color: rgb(29, 29, 29);
+            margin-bottom: 0;
+        }
+
+        .guarantee-banner .left-side h2 span {
+            color: #0239d0;
+            text-decoration: underline;
+        }
+
+        .guarantee-banner .left-side p {
+            font-family: 'Prompt', sans-serif;
+            font-size: 12pt;
+            color: rgba(0, 0, 0, 0.719);
+            margin: 5px 0;
+        }
+
+        .guarantee-banner .right-side {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+        }
+
+        .guarantee-banner .right-side .guarantee-logo {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guarantee-banner .right-side .guarantee-logo img {
+            width: 60%;
+        }
+    }
+
+    /* Mobile */
+    @media(max-width: 1000px) {
+        .guarantee-banner {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .guarantee-banner .left-side {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 30px
+        }
+
+        .guarantee-banner .left-side h2 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 20pt;
+            text-align: center;
+            color: rgb(29, 29, 29);
+            margin-bottom: 0;
+        }
+
+        .guarantee-banner .left-side h2 span {
+            color: #0239d0;
+            text-decoration: underline;
+        }
+
+        .guarantee-banner .left-side p {
+            font-family: 'Prompt', sans-serif;
+            font-size: 12pt;
+            color: rgba(0, 0, 0, 0.719);
+            margin: 5px 0;
+        }
+
+        .guarantee-banner .right-side {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .guarantee-banner .right-side .guarantee-logo {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guarantee-banner .right-side .guarantee-logo img {
+            width: 60%;
+        }
+    }
+
+    .footer {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #0239d0;
+        padding: 5px 0;
+        margin-top: 20px;
+    }
+
+    .footer-container {
+        width: 80%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+    }
+
+    .footer-container span {
+        font-family: 'Prompt', sans-serif;
+        text-align: center;
+    }
+
+    .footer-container .rightReserved {
+        font-size: 10pt;
+        font-weight: 300;
+    }
+
+    .footer-container .emailAccount {
+        font-size: 10pt;
+        font-weight: 300;
+    }
+</style>
+
+<script>
+    // Change ad spend range
+    const adSpendRange = document.getElementById('adSpendRange');
+    const adSpendText = document.getElementById('adSpendText');
+
+    adSpendRange.addEventListener('input', (e) => {
+        const value = e.target.value;
+        adSpendText.innerHTML = `<%=currency%> ${value}`;
+        updateResults();
+    });
+
+    // Change lead spend range
+    const leadSpendRange = document.getElementById('leadSpendRange');
+    const leadSpendText = document.getElementById('leadSpendText');
+
+    leadSpendRange.addEventListener('input', (e) => {
+        const value = e.target.value;
+        leadSpendText.innerHTML = `<%=currency%> ${value}`;
+        updateResults();
+    });
+
+    // Change lead ratio booking range
+    const leadRatioBookingRange = document.getElementById('leadRatioBookingRange');
+    const leadRatioBookingText = document.getElementById('leadRatioBookingText');
+
+    leadRatioBookingRange.addEventListener('input', (e) => {
+        const value = e.target.value;
+        leadRatioBookingText.innerHTML = `${value}%`;
+        updateResults();
+    });
+
+    // Change lead lifetime value range
+    const leadLifetimeValueRange = document.getElementById('leadLifetimeValueRange');
+    const leadLifetimeValueText = document.getElementById('leadLifetimeValueText');
+
+    leadLifetimeValueRange.addEventListener('input', (e) => {
+        const value = e.target.value;
+        leadLifetimeValueText.innerHTML = `<%=currency%> ${value}`;
+        updateResults();
+    });
+
+    // Change lead close ratio range
+    const leadCloseRatioRange = document.getElementById('leadCloseRatioRange');
+    const leadCloseRatioText = document.getElementById('leadCloseRatioText');
+
+    leadCloseRatioRange.addEventListener('input', (e) => {
+        const value = e.target.value;
+        leadCloseRatioText.innerHTML = `${value}%`;
+        updateResults();
+    });
+
+    // Calculate results
+    function updateResults() {
+        updateResultsDesktop();
+        updateResultsMobile();
+    }
+
+    function updateResultsDesktop() {
+        // First, get all values
+        const adSpend = adSpendRange.value;
+        const leadSpend = leadSpendRange.value;
+        const leadRatioBooking = leadRatioBookingRange.value;
+        const leadLifetimeValue = leadLifetimeValueRange.value;
+        const leadCloseRatio = leadCloseRatioRange.value;
+
+        // Second, get all elements of results
+        const resultLeads = document.getElementById('resultLeads');
+        const resultAgendas = document.getElementById('resultAgendas');
+        const resultVentas = document.getElementById('resultVentas');
+        const resultGanancia = document.getElementById('resultGanancia');
+        const resultRetorno = document.getElementById('resultRetorno');
+
+        // Third, calculate results
+        const leads = adSpend / leadSpend;
+        const agendas = leads * (leadRatioBooking / 100);
+        const ventas = agendas * (leadCloseRatio / 100);
+        const ganancia = (ventas * leadLifetimeValue) - adSpend;
+        const retorno = ganancia / adSpend;
+
+        // Fourth, update results
+        resultLeads.innerHTML = Math.round(leads);
+        resultAgendas.innerHTML = Math.round(agendas);
+        resultVentas.innerHTML = Math.round(ventas);
+        resultGanancia.innerHTML = `<%=currency%> ${Math.round(ganancia)}`;
+        resultRetorno.innerHTML = `${Math.round(retorno)}X`;
+    }
+
+    function updateResultsMobile() {
+        // First, get all values
+        const adSpend = adSpendRange.value;
+        const leadSpend = leadSpendRange.value;
+        const leadRatioBooking = leadRatioBookingRange.value;
+        const leadLifetimeValue = leadLifetimeValueRange.value;
+        const leadCloseRatio = leadCloseRatioRange.value;
+
+        // Second, get all elements of results
+        const mResultLeads = document.getElementById('mResultLeads');
+        const mResultAgendas = document.getElementById('mResultAgendas');
+        const mResultVentas = document.getElementById('mResultVentas');
+        const mResultGanancia = document.getElementById('mResultGanancia');
+        const mResultRetorno = document.getElementById('mResultRetorno');
+
+        // Third, calculate results
+        const leads = adSpend / leadSpend;
+        const agendas = leads * (leadRatioBooking / 100);
+        const ventas = agendas * (leadCloseRatio / 100);
+        const ganancia = (ventas * leadLifetimeValue) - adSpend;
+        const retorno = ganancia / adSpend;
+
+        // Fourth, update results
+        mResultLeads.innerHTML = Math.round(leads);
+        mResultAgendas.innerHTML = Math.round(agendas);
+        mResultVentas.innerHTML = Math.round(ventas);
+        mResultGanancia.innerHTML = `<%=currency%> ${Math.round(ganancia)}`;
+        mResultRetorno.innerHTML = `${Math.round(retorno)}X`;
+    }
+
+</script>
+
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traductor</title>
+    <!-- Incluye la librería Dropzone.js desde un CDN -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropzone@5.7.2/dist/dropzone.css">
+    <script src="https://cdn.jsdelivr.net/npm/dropzone@5.7.2/dist/dropzone.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+</head>
+
+<body>
+    <script>
+        // Inicializa Dropzone.js con opciones personalizadas
+        Dropzone.options.demoUpload = {
+            url: '/private/translator/upload',
+            // autoProcessQueue: false, // Para deshabilitar la subida automática
+            maxFiles: 1, // Limita a un solo archivo
+            init: function () {
+                var myDropzone = this;
+
+                // Configura el evento de éxito al cargar un archivo
+                this.on("success", function (file, response) {
+                    console.log('asd');
+                    Toastify({
+                        text: "¡Subido con éxito! Vamos a procesarlo...",
+                        duration: 4000,
+                        newWindow: true,
+                        close: true,
+                        gravity: "bottom", // `top` or `bottom`
+                        position: 'left', // `left`, `center` or `right`
+                        backgroundColor: "#26C485",
+                    }).showToast();
+
+                    // Add class .show to #loading_overlay
+                    document.getElementById('loading_overlay').classList.add('show');
+                    console.log(response); // Puedes manejar la respuesta del servidor aquí
+
+                    // Wait 5 seconds 
+                    showResult(response);
+                    setTimeout(function () {
+                        // Remove class .show to #loading_overlay
+                        document.getElementById('loading_overlay').classList.remove('show');
+                    }, 5000);
+                    
+
+                    
+                });
+
+                // On error
+                this.on("error", function (file, response) {
+                    console.log('Error al subir el archivo: ' + response);
+
+                    // If error is "You can not upload any more files." alert it
+                    if (response == 'You can not upload any more files.') {
+                        // Cancel file upload
+                        Toastify({
+                            text: "¡No puedes subir más archivos! Por favor, recarga la página.",
+                            duration: 10000,
+                            newWindow: true,
+                            close: true,
+                            gravity: "bottom", // `top` or `bottom`
+                            position: 'left', // `left`, `center` or `right`
+                            backgroundColor: "#DF2935   ",
+                        }).showToast();
+                    }
+                });
+            }
+        };
+    </script>
+
+    <div id="loading_overlay" class="">
+        <div id = "building" style="font-size: 12px">
+            <div id = "blocks">
+              <div class = "b" id = "b1"></div>
+              <div class = "b" id = "b2"></div>
+              <div class = "b" id = "b3"></div>
+              <div class = "b" id = "b4"></div>
+            </div>
+          </div>
+    </div>
+
+    <div class="top">
+        <h1>Traductor Multimodal Multilingüe</h1>
+        <p>Herramienta de traducción multimodal multilingüe.</p>
+    </div>
+
+    <div class="content">
+        <div class="uploader-container">
+            <div class="info">
+                <h2>Arrastra el archivo que deseas traducir aquí.</h2>
+                <p>Formatos aceptados: jpg, jpeg, png, mp4</p>
+            </div>
+            <div id="dropzone">
+                <form action="/upload" class="dropzone needsclick" id="demo-upload">
+                    <div class="dz-message needsclick">
+                        <span class="text">
+                            <img src="https://icons.veryicon.com/png/o/system/dan_system/file-60.png" alt="Camera" />
+                            Drop files here or click to upload.
+                        </span>
+                        <span class="plus">+</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="translator-container"></div>
+    </div>
+</body>
+
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    #loading_overlay {
+        position: fixed;
+        z-index: 999991;
+        background-color: black;
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        display: none;
+        opacity: 0;
+        transition: 2s;
+    }
+
+    #loading_overlay.show {
+        display: block;
+        animation: fadein .2s forwards;
+    }
+
+    @keyframes fadein {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    .top {
+        height: 100px;
+        /* background-color: red; */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .top h1 {
+        color: #313131;
+        height: 5px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        font-family: 'Prompt', sans-serif;
+    }
+
+    .top p {
+        color: #3131317c;
+        font-size: .8rem;
+        font-weight: 300;
+        font-family: 'Lato', sans-serif;
+    }
+
+    .content {
+        height: calc(100vh - 100px);
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        /* background-color: #313131; */
+    }
+
+    .uploader-container {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: top;
+        align-items: center;
+        /* background-color: blue; */
+    }
+
+    .uploader-container .info {
+        width: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* background-color: yellow; */
+    }
+
+    .uploader-container .info h2 {
+        color: #313131;
+        font-size: 1.2rem;
+        height: 10px;
+        font-weight: 600;
+        font-family: 'Prompt', sans-serif;
+    }
+
+    .uploader-container .info p {
+        color: #3131317c;
+        font-size: .8rem;
+        font-weight: 300;
+        font-family: 'Lato', sans-serif;
+    }
+
+    #dropzone {
+        width: 80%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /* background-color: yellow; */
+    }
+
+    .dropzone {
+        width: 100%;
+        margin: 1%;
+        border: 2px dashed #3498db !important;
+        border-radius: 5px;
+        transition: 0.2s;
+    }
+
+    .dropzone.dz-drag-hover {
+        border: 2px solid #3498db !important;
+    }
+
+    .dz-message.needsclick img {
+        width: 50px;
+        display: block;
+        margin: auto;
+        opacity: 0.6;
+        margin-bottom: 15px;
+    }
+
+    span.plus {
+        display: none;
+    }
+
+    .dropzone.dz-started .dz-message {
+        display: inline-block !important;
+        width: 120px;
+        float: right;
+        opacity: 0;
+        border-radius: 30px;
+        height: 120px;
+        margin: 16px;
+        transition: 0.2s;
+    }
+
+    .dropzone.dz-started .dz-message span.text {
+        display: none;
+    }
+
+    .dropzone.dz-started .dz-message span.plus {
+        display: block;
+        font-size: 70px;
+        opacity: 0;
+        line-height: 110px;
+    }
+
+    .translator-container {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: green;
+    }
+</style>
+
+<style>
+    #building {
+        display: flex;
+        width: 35em;
+        height: 100vh;
+        margin: auto;
+    }
+
+    #blocks {
+        margin: auto;
+    }
+
+    #caption {
+        padding-left: 0.5em;
+        margin: auto;
+        font-size: 2.5em;
+    }
+
+    .b {
+        background: #d5fff7;
+        border: 0.3em solid #89f2f2;
+        width: 4.5em;
+        height: 4.5em;
+        border-radius: 0.5em;
+        margin: 1em;
+        position: relative;
+        animation-duration: 1.2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    #b1 {
+        animation-name: b1;
+    }
+
+    #b2 {
+        animation-name: b2;
+        margin-left: 7.25em;
+    }
+
+    #b3 {
+        animation-name: b3;
+        margin-top: -6em;
+    }
+
+    #b4 {
+        animation-name: b4;
+        margin-left: 7.25em;
+    }
+
+    @keyframes b1 {
+        0% {
+            left: 0em;
+            transform: rotate(0deg);
+        }
+
+        50% {
+            left: 6.25em;
+            bottom: 0em;
+            transform: rotate(90deg);
+        }
+
+        100% {
+            left: 6.25em;
+            bottom: -6.125em;
+            transform: rotate(90deg);
+        }
+    }
+
+    @keyframes b2 {
+        50% {
+            bottom: 0em;
+        }
+
+        100% {
+            bottom: -6.125em;
+        }
+    }
+
+    @keyframes b3 {
+        50% {
+            top: 0em;
+        }
+
+        100% {
+            top: -6.125em;
+        }
+    }
+
+    @keyframes b4 {
+        0% {
+            left: 0em;
+            transform: rotate(0deg);
+        }
+
+        50% {
+            left: -6.25em;
+            top: 0em;
+            transform: rotate(90deg);
+        }
+
+        100% {
+            left: -6.25em;
+            top: -6.125em;
+            transform: rotate(90deg);
+        }
+    }
+
+    @media(max-width: 400px) {
+        #building {
+            width: 100%
+        }
+
+        #caption {
+            display: none;
+        }
+    }
+</style>
+
+<style>
+
+    #recharge {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        margin: 1em;
+        padding: 1em;
+        border: none;
+        border-radius: 5px;
+        background-color: #19053f;
+        color: #e4e4e4;
+        font-size: .8rem;
+        font-weight: 300;
+        font-family: 'Lato', sans-serif;
+        cursor: pointer;
+    }
+
+    .result-container {
+        height: calc(100vh);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* background-color: #313131; */
+    }
+    .result {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+        background-color: #313131;
+
+    }
+
+    .column {
+        width: 50%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* background-color: red; */
+    }
+
+    .column.left {
+        /* background-color: blue; */
+    }
+
+    .column.right {
+        /* background-color: green; */
+    }
+
+    .text {
+        width: 80%;
+        height: 80%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        color: #e4e4e4;
+        font-size: .8rem;
+        font-weight: 300;
+        font-family: 'Lato', sans-serif;
+        /* background-color: yellow; */
+    }
+
+    .text h2 {
+        color: #e4e4e4;
+        font-size: 1.2rem;
+        font-weight: 600;
+        font-family: 'Prompt', sans-serif;
+        text-align: left;
+        width: 100%;
+        height: 10px;
+        font-weight: 600;
+        font-family: 'Prompt', sans-serif;
+    }
+</style>
+
+<script>
+    function showResult(response) {
+        // Change body html
+        document.body.innerHTML = `
+        <div class="result-container">
+        <div class="result">
+            <!-- Column left with  "original" text -->
+            <div class="column left">
+                <div class="text">
+                    <h2>Original</h2>
+                    <p id="original">${response.transcription}</p>
+                </div>
+            </div>
+            <!-- Column right with "translated" text -->
+            <div class="column right">
+                <div class="text">
+                    <h2>Traducción</h2>
+                    <p id="translated">${response.translation}</p>
+                </div>
+            </div>
+        </div>
+        <button id="recharge">Recargar página</button>
+    </div>
+        `;
+    }
+</script>
+
+</html>
