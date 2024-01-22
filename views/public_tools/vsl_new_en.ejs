@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Setter Soft</title>
+</head>
+
+<body>
+    <form class="calc-container" id="calculator">
+        <div class="head">
+            <h1>Income <span>Calculator</span></h1>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input name="conversations" type="range" id="conversations" min="50" max="10000" step="50">
+            </div>
+            <div class="range_info">
+                <label>Conversations</label>
+                <br>
+                <input type="number" value="5000" id="conversationsText"/>
+            </div>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input name="agendas" type="range" id="agenda" min="1" max="100" value="20" step="1">
+            </div>
+            <div class="range_info">
+                <label>Agenda %</label>
+                <br>
+                <input type="number" value="20" id="agendaText"/>
+            </div>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input name="sales" type="range" id="sales" min="1" max="100" value="40" step="1">
+            </div>
+            <div class="range_info">
+                <label>Sales %</label>
+                <br>
+                <input type="number" value="40" id="salesText" min="1" max="100"/>
+            </div>
+        </div>
+        <div class="range">
+            <div class="range_slider">
+                <input name="ticket" type="range" id="ticket" min="100" max="20000" value="500" step="100">
+            </div>
+            <div class="range_info">
+                <label>Average ticket</label>
+                <br>
+                <div class="input-container">
+                    <%=currency%><input type="number" value="500" id="ticketText"/>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="result-calc-container">
+        <!-- Table (first row title) and (second row result) -->
+        <table>
+            <tr>
+                <th>SPENDINGS</th>
+                <th>AGENDA QUANTITY</th>
+                <th>TOTAL SALES</th>
+                <th>TOTAL INCOMES</th>
+                <th>EARNINGS</th>
+            </tr>
+            <tr>
+                <td id="resultGastos"><%=currency%> X</td>
+                <td id="resultAgendas">X</td>
+                <td id="resultVentas"><%=currency%> X</td>
+                <td id="resultIngresos"><%=currency%> X</td>
+                <td id="resultGanancia"><%=currency%> X</td>
+            </tr>
+        </table>
+        <div class="results">
+            <div class="item">
+                <label translate="no">Spendings</label>
+                <span id="resultGastos"><%=currency%> X</span>
+            </div>
+            <div class="item">
+                <label translate="no">Agendas</label>
+                <span id="resultAgendas">X</span>
+            </div>
+            <div class="item">
+                <label translate="no">Total sales</label>
+                <span id="resultVentas"><%=currency%> X</span>
+            </div>
+            <div class="item">
+                <label transalte="no">Total incomes</label>
+                <span id="resultIngresos"><%=currency%> X</span>
+            </div>
+            <div class="item">
+                <label translate="no">Earnings</label>
+                <span id="resultGanancia"><%=currency%> X</span>
+            </div>
+        </div>
+    </div>
+
+    <hr id="calc_separator">
+
+    <div class="content">
+        <div class="guarantee-banner">
+            <div class="left-side">
+                <h2>How about a <span>100% money-back guarantee?</span></h2>
+                <p>Who else do you know that puts that in writing?</p>
+                <p>If you don't see a 200% return on investment from working with us we will give you all of your money
+                    back AND you get to keep the system.</p>
+            </div>
+            <div class="right-side">
+                <div class="guarantee-logo">
+                    <img src="https://images.leadconnectorhq.com/image/f_webp/q_80/r_1200/u_https://assets.cdn.filesafe.space/nCiFSON597KefWHupKoA/media/64a737281e4e7ba4f01246ec.png"
+                        alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-container">
+            <span class="rightReserved">© 2023 SetterSoft. All rights reserved.</span>
+            <span class="emailAccount">support@settersoft.com</span>
+        </div>
+    </div>
+</body>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Lato:wght@700&family=Prompt:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+
+    }
+
+    .calc-container {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .calc-container .head {
+        width: 100%;
+    }
+
+    .calc-container .head h1 {
+        color: #0a0a0a;
+        text-align: center;
+        font-size: 24pt;
+        font-family: 'Lato', sans-serif;
+    }
+
+    .calc-container .head h1 span {
+        color: #0239d0;
+    }
+
+    /* On desktop (+1000px) */
+    @media (min-width: 1000px) {
+        .calc-container .range {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .calc-container .range .range_slider {
+            width: 400px;
+            padding: 20px;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calc-container .range .range_info {
+            width: 200px;
+            border-left: 1px solid #000000;
+            height: auto;
+            padding-left: 20px;
+        }
+    }
+
+    /* On mobile */
+    @media (max-width: 1000px) {
+        .calc-container .range {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .calc-container .range .range_slider {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .calc-container .range .range_info {
+            width: 80%;
+            height: auto;
+            margin-top: 5px;
+        }
+    }
+
+    .calc-container .range .range_slider input[type=range] {
+        width: 100%;
+        height: 5px;
+        -webkit-appearance: none;
+        background-color: #0239d0;
+        outline: none;
+        border-radius: 10px;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.30);
+    }
+
+    .calc-container .range .range_slider input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 15px;
+        height: 15px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    .calc-container .range .range_slider input[type=range]::-moz-range-thumb {
+        -webkit-appearance: none;
+        width: 30px;
+        height: 30px;
+        background-color: #ffffff;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+    }
+
+    .range_info label {
+        font-family: 'Prompt', sans-serif;
+        font-size: 12pt;
+        color: #0a0a0a;
+    }
+
+    .range_info span, .range_info input {
+        font-family: 'Prompt', sans-serif;
+        font-size: 12pt;
+        color: #0239d0;
+        border: none;
+        cursor: pointer;
+    }
+
+    .input-container {
+        display: flex;
+        position: relative;
+        color: #0239d0;
+        width: 100%;
+        flex-direction: row;
+        align-items: center;
+        justify-content: start;
+        gap: 1pt;
+    }
+
+    /* Result calc table (need to be fix title with result) with flex start on rows*/
+    /* On desktop */
+    @media (min-width: 1000px) {
+        .results {
+            display: none;
+        }
+
+        .result-calc-container {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        /* /* Padding into TD  */
+        .result-calc-container table td {
+            padding-right: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #0239d0;
+        }
+
+        /* Padding into TH  */
+        .result-calc-container table th {
+            padding-right: 40px;
+            font-size: 10pt;
+            font-weight: 300;
+            text-align: center;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Font of all table */
+        .result-calc-container table td {
+            font-family: 'Prompt', sans-serif;
+            font-size: 22pt;
+        }
+    }
+
+    /* On mobile */
+    @media (max-width: 1000px) {
+
+        .result-calc-container table {
+            display: none;
+        }
+
+        .result-calc-container .results {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .result-calc-container .results .item {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .result-calc-container .results .item label {
+            font-family: 'Prompt', sans-serif;
+            font-size: 18pt;
+            color: #0a0a0a;
+        }
+
+        .result-calc-container .results .item span {
+            font-family: 'Prompt', sans-serif;
+            font-size: 18pt;
+            color: #0239d0;
+        }
+    }
+
+    #calc_separator {
+        width: 80%;
+        height: 1px;
+        background-color: #0239d0;
+        margin-top: 30px;
+    }
+
+    .content {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Desktop  */
+    @media(min-width: 1000px) {
+        .guarantee-banner {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 30px;
+        }
+
+        .guarantee-banner .left-side {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding-left: 50px;
+            width: 50%;
+        }
+
+        .guarantee-banner .left-side h2 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 22pt;
+            color: rgb(29, 29, 29);
+            margin-bottom: 0;
+        }
+
+        .guarantee-banner .left-side h2 span {
+            color: #0239d0;
+            text-decoration: underline;
+        }
+
+        .guarantee-banner .left-side p {
+            font-family: 'Prompt', sans-serif;
+            font-size: 12pt;
+            color: rgba(0, 0, 0, 0.719);
+            margin: 5px 0;
+        }
+
+        .guarantee-banner .right-side {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 50%;
+        }
+
+        .guarantee-banner .right-side .guarantee-logo {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guarantee-banner .right-side .guarantee-logo img {
+            width: 60%;
+        }
+    }
+
+    /* Mobile */
+    @media(max-width: 1000px) {
+        .guarantee-banner {
+            width: 80%;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .guarantee-banner .left-side {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 30px
+        }
+
+        .guarantee-banner .left-side h2 {
+            font-family: 'Prompt', sans-serif;
+            font-size: 20pt;
+            text-align: center;
+            color: rgb(29, 29, 29);
+            margin-bottom: 0;
+        }
+
+        .guarantee-banner .left-side h2 span {
+            color: #0239d0;
+            text-decoration: underline;
+        }
+
+        .guarantee-banner .left-side p {
+            font-family: 'Prompt', sans-serif;
+            font-size: 12pt;
+            color: rgba(0, 0, 0, 0.719);
+            margin: 5px 0;
+        }
+
+        .guarantee-banner .right-side {
+            width: auto;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .guarantee-banner .right-side .guarantee-logo {
+            width: 100%;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .guarantee-banner .right-side .guarantee-logo img {
+            width: 60%;
+        }
+    }
+
+    .footer {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #0239d0;
+        padding: 5px 0;
+        margin-top: 20px;
+    }
+
+    .footer-container {
+        width: 80%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+    }
+
+    .footer-container span {
+        font-family: 'Prompt', sans-serif;
+        text-align: center;
+    }
+
+    .footer-container .rightReserved {
+        font-size: 10pt;
+        font-weight: 300;
+    }
+
+    .footer-container .emailAccount {
+        font-size: 10pt;
+        font-weight: 300;
+    }
+</style>
+
+<script>
+    const $form = document.querySelector('form');
+    $form.addEventListener('submit', (e) => {
+        e.preventDefault();
+    });
+    $form.addEventListener('change', (e) => {
+        e.preventDefault();
+        updateResults();
+    });
+
+    const $conversations = document.querySelector('#conversations');
+    const $conversationsText = document.querySelector('#conversationsText');
+
+    $conversations.addEventListener('input', (e) => {
+        const value = e.target.value;
+        $conversationsText.value = value;
+    });
+
+    $conversationsText.addEventListener('change', (e) => {
+        const value = e.target.value;
+        $conversations.value = value;
+    });
+
+    const $agenda = document.querySelector('#agenda');
+    const $agendaText = document.querySelector('#agendaText');
+
+    $agenda.addEventListener('input', (e) => {
+        const value = e.target.value;
+        $agendaText.value = value;
+    });
+
+    $agendaText.addEventListener('change', (e) => {
+        const value = e.target.value;
+        if (value > 100) {
+            $agenda.value = 100;
+            e.target.value = 100;
+        } else {
+            $agenda.value = value;
+        }
+    });
+
+    const $sales = document.querySelector('#sales');
+    const $salesText = document.querySelector('#salesText');
+
+    $sales.addEventListener('input', (e) => {
+        const value = e.target.value;
+        $salesText.value = value;
+    });
+
+    $salesText.addEventListener('change', (e) => {
+        const value = e.target.value;
+        if (value > 100) {
+            $sales.value = 100;
+            e.target.value = 100;
+        } else {
+            $sales.value = value;
+        }
+    });
+
+    const $ticket = document.querySelector('#ticket');
+    const $ticketText = document.querySelector('#ticketText');
+
+    $ticket.addEventListener('input', (e) => {
+        const value = e.target.value;
+        $ticketText.value = value;
+    });
+
+    $ticketText.addEventListener('change', (e) => {
+        const value = e.target.value;
+        $ticket.value = value;
+    });
+
+    function calculateSpendings(conversations) {
+        const FIXED_SPENDING = 350;
+        const RATE_OF_CONVERSATION = 0.18;
+
+        return Math.round(FIXED_SPENDING + (RATE_OF_CONVERSATION * conversations));
+    }
+
+    function calculateAgendas(conversations, percentageOfAgenda) {
+        percentage = percentageOfAgenda / 100;
+
+        return Math.round(conversations * percentage);
+    }
+
+    function calculateTotalSales(percentageOfSales, agendas) {
+        percentage = percentageOfSales / 100;
+
+        return Math.round(agendas * percentage);
+    }
+
+    function calculateTotalIncomes(sales, ticketPrice) {
+        return Math.round(sales * ticketPrice);
+    }
+
+    function calculateProfit(totalIncomes, spendings) {
+        return Math.round(totalIncomes - spendings);
+    }
+
+    function updateResults() {
+        const conversations = $conversations.value;
+        const percentageOfAgenda = $agenda.value;
+        const percentageOfSales = $sales.value;
+        const ticketPrice = $ticket.value;
+
+        const spendings = calculateSpendings(conversations);
+        const agendas = calculateAgendas(conversations, percentageOfAgenda);
+        const totalSales = calculateTotalSales(percentageOfSales, agendas);
+        const totalIncomes = calculateTotalIncomes(totalSales, ticketPrice);
+        const profit = calculateProfit(totalIncomes, spendings);
+
+        const resultGastos = document.querySelectorAll('#resultGastos');
+        const resultAgendas = document.querySelectorAll('#resultAgendas');
+        const resultVentas = document.querySelectorAll('#resultVentas');
+        const resultIngresos = document.querySelectorAll('#resultIngresos');
+        const resultGanancia = document.querySelectorAll('#resultGanancia');
+
+        resultGastos.forEach((element) => {
+            element.innerText = spendings;
+        });
+        resultAgendas.forEach((element) => {
+            element.innerText = agendas;
+        });
+        resultVentas.forEach((element) => {
+            element.innerText = `<%=currency%> ${totalSales}`;
+        });
+        resultIngresos.forEach((element) => {
+            element.innerText = `<%=currency%> ${totalIncomes}`;
+        });
+        resultGanancia.forEach((element) => {
+            element.innerText = `<%=currency%> ${profit}`;
+        });
+    }
+</script>
+
+</html>
