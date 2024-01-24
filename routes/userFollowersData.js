@@ -73,7 +73,7 @@ router.get('/createRun', async (req, res) => {
       ig_igtvVideoCount: Number(igtvVideoCount),
       ig_postsCount: Number(postsCount),
       ig_highlightReelCount: Number(highlightReelCount),
-      date: DateTime.now().minus({ days: 5 }).setZone("utc").toJSDate().toISOString(),
+      date: DateTime.now().setZone("utc").toJSDate().toISOString(),
     };
   });
   const igRun = await mongoAPI.createARun(igFollowers);
