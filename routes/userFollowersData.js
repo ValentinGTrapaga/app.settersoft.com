@@ -18,6 +18,7 @@ router.get('/lastDay', async (req, res) => {
 
   return res.json({ data });
 }
+)
 router.get('/lastWeek', async (req, res) => {
   const now = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).setZone("utc");
   const sevenDaysAgo = now.minus({ days: 7 }).toJSDate()
