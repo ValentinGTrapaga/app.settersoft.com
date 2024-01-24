@@ -1,5 +1,7 @@
 const express = require('express');
 const app = express();
+require('dotenv').config();
+require('./db');
 
 // Set view engine
 app.set('view engine', 'ejs');
@@ -14,6 +16,7 @@ const publicTools = require('./routes/publicTools');
 // Define routes
 app.use('/tools/', publicTools);
 app.use('/private/', require('./routes/privateTools'));
+app.use('/userFollowersData/', require('./routes/userFollowersData'));
 
 
 // Start server
