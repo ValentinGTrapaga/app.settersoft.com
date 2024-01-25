@@ -4,12 +4,14 @@ const router = express.Router();
 const excel = require('../services/excel.js')
 
 const { DateTime } = require('luxon');
-const { formatItem } = require('../utils/formatItem')
+const { formatItem } = require('../utils/formatItem');
+const getGrowthByDay = require('../utils/getGrowthByDay.js');
 
 router.get('/', async (req, res) => {
   const data = await mongoAPI.getAll();
 
-  const formattedData = data.map(formatItem)
+  const addedGrowthArray = getGrowthByDay(data)
+  const formattedData = addedGrowthArray.map(formatItem)
 
   return res.json({ data: formattedData });
 })
@@ -18,7 +20,8 @@ router.get('/lastDay', async (req, res) => {
   const twentyFourHoursAgo = now.minus({ days: 1 }).toJSDate()
 
   const data = await mongoAPI.getAfterThan(twentyFourHoursAgo);
-  const formattedData = data.map(formatItem)
+  const addedGrowthArray = getGrowthByDay(data)
+  const formattedData = addedGrowthArray.map(formatItem)
 
   return res.json({ data: formattedData });
 }
@@ -29,17 +32,19 @@ router.get('/lastWeek', async (req, res) => {
 
   const data = await mongoAPI.getAfterThan(sevenDaysAgo);
 
-  const formattedData = data.map(formatItem)
+  const addedGrowthArray = getGrowthByDay(data)
+  const formattedData = addedGrowthArray.map(formatItem)
 
   return res.json({ data: formattedData });
 })
 router.get('/lastMonth', async (req, res) => {
   const now = DateTime.now().set({ hour: 0, minute: 0, second: 0, millisecond: 0 }).setZone("utc");
-  const thirtyDaysAgo = now.minus({ days: 30 }).toJSDate().toUTCString()
+  const thirtyDaysAgo = now.minus({ month: 1 }).toJSDate().toUTCString()
 
   const data = await mongoAPI.getAfterThan(thirtyDaysAgo);
 
-  const formattedData = data.map(formatItem)
+  const addedGrowthArray = getGrowthByDay(data)
+  const formattedData = addedGrowthArray.map(formatItem)
 
   return res.json({ data: formattedData });
 })
