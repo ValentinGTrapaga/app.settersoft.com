@@ -9,7 +9,6 @@ const getGrowthByDay = require('../utils/getGrowthByDay.js');
 
 router.get('/', async (req, res) => {
   const data = await mongoAPI.getAll();
-  console.log('entered here')
 
   const addedGrowthArray = getGrowthByDay(data)
   const formattedData = addedGrowthArray.map(formatItem)
