@@ -29,6 +29,11 @@ const mongoAPI = {
 
     return UserArray
   },
+  getByUsername: async (username) => {
+    const data = await User.find({ ig_username: username });
+
+    return data
+  }
 };
 
 module.exports = mongoAPI;
