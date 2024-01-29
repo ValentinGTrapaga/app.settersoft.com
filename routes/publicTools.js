@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
-const createCompletion = require('../utils/openai.js');
+const { generatePromise, generateScript } = require('../utils/openai.js');
 const { extractTextFromDocx } = require('../utils/extractTextFromDocx.js');
 
 const storage = multer.diskStorage({
@@ -53,7 +53,6 @@ router.get('/generate-promise', async (req, res) => {
 
 router.post('/generate-promise/upload', upload.array("image"), async (req, res) => {
     const files = req.files;
-    console.log(files)
     try {
         /** @type {{avatar: string, client: string, offer: string}} */
         const conversations = { avatar: "", client: "", offer: "" };
@@ -75,7 +74,7 @@ router.post('/generate-promise/upload', upload.array("image"), async (req, res) 
             }
         }
 
-        const completions = await createCompletion(conversations);
+        const completions = await generatePromise(conversations);
 
         res.json({
             message: "Files processed successfully",
@@ -86,6 +85,49 @@ router.post('/generate-promise/upload', upload.array("image"), async (req, res) 
         console.error("Error processing files:", error);
         res.status(500).json({ error: "Internal Server Error" });
     }
-})
+});
+
+router.get('/generate-script', async (req, res) => {
+    res.render('public_tools/vsl_generate_script');
+});
+
+router.post('/generate-script/upload', upload.array("script"), async (req, res) => {
+    const files = req.files;
+    try {
+        /** @type {{avatar: string, client: string, offer: string, structure: string}} */
+        const conversations = { avatar: "", client: "", offer: "", structure: "" };
+
+        for await (const file of files) {
+            try {
+                const extractedText = await extractTextFromDocx(file.path);
+                const cleanedText = extractedText.replace(/\s+/g, " ");
+
+                if (file.path.includes("Avatar")) {
+                    conversations.avatar = cleanedText;
+                } else if (file.path.includes("cliente")) {
+                    conversations.client = cleanedText;
+                } else if (file.path.includes("oferta")) {
+                    conversations.offer = cleanedText;
+                } else {
+                    conversations.structure = cleanedText;
+                }
+            } catch (error) {
+                console.error("Error processing file:", error);
+            }
+        }
+
+        const completions = await generateScript(conversations);
+
+        res.json({
+            message: "Files processed successfully",
+            completions,
+            error: null,
+        });
+    } catch (error) {
+        console.error("Error processing files:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+
+});
 
 module.exports = router;

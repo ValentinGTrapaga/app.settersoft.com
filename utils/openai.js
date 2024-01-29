@@ -3,7 +3,7 @@ const OpenAI = require("openai");
 const openai = new OpenAI();
 
 /** @param {{avatar: string, client: string, offer: string}} conversations */
-async function createCompletion(conversations) {
+async function generatePromise(conversations) {
   const completion = await openai.chat.completions.create({
     messages: [
       {
@@ -43,4 +43,55 @@ async function createCompletion(conversations) {
   return completion.choices[0].message.content;
 }
 
-module.exports = createCompletion;
+/** @param {{avatar: string, client: string, offer: string, structure: string}} conversations */
+async function generateScript(conversations) {
+    const completion = await openai.chat.completions.create({
+        messages: [
+            {
+                role: "system",
+                content:
+                "Vamos a hacer un juego de roles. Eres un asistente que se encarga de diseñar un guión para el equipo de marketing, el guión se usará para armar un vídeo de venta. Para hacerlo, debes seguir paso a paso: 1. Preguntar al usuario la información de [Archivo 1] 2. Preguntar al usuario la información de [Archivo 2] 3. Preguntar al usuario la información de [Archivo 3] 4. Preguntar al usuario cual va a ser la estructura del guión. 5. En base a esa información, armar el guión siguiendo la estructura enviada en el último archivo.",
+            },
+            {
+                role: "assistant",
+                content: "¿Me darías información sobre el perfil del cliente?",
+            },
+            {
+                role: "user",
+                content: `${conversations.client}`,
+            },
+            {
+                role: "assistant",
+                content: "Profundiza en tu avatar",
+            },
+            {
+                role: "user",
+                content: `${conversations.avatar}`,
+            },
+            {
+                role: "assistant",
+                content:
+                "¿Me darías información del archivo sobre como debería aproximar la oferta?",
+            },
+            {
+                role: "user",
+                content: `${conversations.offer}`,
+            },
+            {
+                role: "assistant",
+                content:
+                "¿Cuál debería de ser la estructura de tu guion?",
+            },
+            {
+                role: "user",
+                content: `${conversations.structure}`,
+            },
+        ],
+        model: "gpt-4-1106-preview",
+        temperature: 0.7,
+    })
+
+    return completion.choices[0].message.content
+}
+
+module.exports = { generatePromise, generateScript };
