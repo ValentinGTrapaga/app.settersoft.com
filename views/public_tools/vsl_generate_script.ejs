@@ -8,6 +8,7 @@
   </head>
   <body>
     <form enctype="multipart/form-data" class="form">
+<<<<<<< HEAD
         <p>Para generar el guión, debes proporcionar 4 archivos, los cuales son:</p>
         <ul>
             <li>Aproximación a la oferta</li>
@@ -16,12 +17,24 @@
             <li>Estructura de guión (Video corto guión)</li>
         </ul>
         <input
+=======
+      <label
+        class="block mb-2 text-sm font-medium text-white cursor-pointer"
+        for="image">
+            Sube los archivos
+      </label>
+      <input
+>>>>>>> 5d13eab (feat: generate scripts given docx files)
         id="script"
         name="script"
         type="file"
         multiple
         class="file-input file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100" />
+<<<<<<< HEAD
         <button type="submit" value="Submit" class="submit-btn">Generar guión</button>
+=======
+      <button type="submit" value="Submit" class="submit-btn">Generar guión</button>
+>>>>>>> 5d13eab (feat: generate scripts given docx files)
     </form>
 
     <main id="result"></main>
@@ -38,6 +51,7 @@
           padding: 20px;
         }
 
+<<<<<<< HEAD
         .form ul, .form p {
             align-self: start;
         }
@@ -46,6 +60,12 @@
           margin-block: 20px;
           width: 100%;
           font-size: 14px;
+=======
+        .file-input {
+          margin-bottom: 20px;
+          width: 100%;
+          font-size: 16px;
+>>>>>>> 5d13eab (feat: generate scripts given docx files)
           background-color: #ded6fa;
           cursor: pointer;
           border-radius: 99999999999px;
