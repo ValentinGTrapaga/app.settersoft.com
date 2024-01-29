@@ -3,7 +3,7 @@ const fs = require('fs');
 
 // Import the OpenAI SDK
 const OpenAI = require("openai");
-const openai = new OpenAI({ apiKey: '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' });
+const openai = new OpenAI();
 
 exports.translateVideo = async (filename) => {
     console.log('Vamos a convertir el archivo ' + filename + ' a mp3');
