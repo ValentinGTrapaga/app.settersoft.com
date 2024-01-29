@@ -2,16 +2,8 @@ const { CuteFFMPEG, FFMPEGRequest } = require("cute-ffmpeg");
 const fs = require('fs');
 
 // Import the OpenAI SDK
-const { Configuration, OpenAIApi } = require("openai");
-
-// Create a new configuration object and initialize it with API key
-const configuration = new Configuration({
-    apiKey: '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',
-});
-
-const openai = new OpenAIApi(configuration);
-
-
+const OpenAI = require("openai");
+const openai = new OpenAI({ apiKey: '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' });
 
 exports.translateVideo = async (filename) => {
     console.log('Vamos a convertir el archivo ' + filename + ' a mp3');

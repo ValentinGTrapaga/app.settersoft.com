@@ -1,14 +1,17 @@
 const express = require('express');
 const app = express();
 require('dotenv').config();
-require('./db');
+// require('./db');
 
 // Set view engine
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
 // Set static folder
+app.use(express.json());
+app.use(express.text("*/*"));
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
 
 // Set routes
 const publicTools = require('./routes/publicTools');
