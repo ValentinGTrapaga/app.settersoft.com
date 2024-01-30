@@ -94,4 +94,4 @@ async function generateScript(conversations) {
     return completion.choices[0].message.content
 }
 
-module.exports = { generatePromise, generateScript };
+module.exports = { generatePromise, generateScript }

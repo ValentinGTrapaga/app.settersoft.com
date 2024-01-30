@@ -12,7 +12,7 @@ const excel = {
     rows.forEach((row) => {
       const [name, ig, tiktok, yt] = row.split(",");
 
-      data.push({ name, ig, tiktok, yt });
+      data.push({ ig, tiktok, yt });
     });
 
     return { data, apiKey };

@@ -10,7 +10,11 @@ const IgUserDataSchema = new Schema({
   ig_postsCount: Number,
   ig_highlightReelCount: Number,
   date: { type: Date, default: Date.now },
+  tiktok_username: String,
+  tiktok_followersCount: Number,
+  tiktok_followsCount: Number,
+  tiktok_profilePicUrl: String,
+  tiktok_postsCount: Number,
 });
 
-//TODO: Add tiktok and yt
 module.exports = model('UserFollowers', IgUserDataSchema)
