@@ -8,18 +8,20 @@
   </head>
   <body>
     <form enctype="multipart/form-data" class="form">
-      <label
-        class="block mb-2 text-sm font-medium text-white cursor-pointer"
-        for="image">
-            Sube los archivos
-      </label>
-      <input
+        <p>Para generar el guión, debes proporcionar 4 archivos, los cuales son:</p>
+        <ul>
+            <li>Aproximación a la oferta</li>
+            <li>Perfil del cliente</li>
+            <li>Profundiza en tu Avatar</li>
+            <li>Estructura de guión (Video corto guión)</li>
+        </ul>
+        <input
         id="script"
         name="script"
         type="file"
         multiple
         class="file-input file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-violet-50 file:text-violet-700 hover:file:bg-violet-100" />
-      <button type="submit" value="Submit" class="submit-btn">Generar guión</button>
+        <button type="submit" value="Submit" class="submit-btn">Generar guión</button>
     </form>
 
     <main id="result"></main>
@@ -36,10 +38,14 @@
           padding: 20px;
         }
 
+        .form ul, .form p {
+            align-self: start;
+        }
+
         .file-input {
-          margin-bottom: 20px;
+          margin-block: 20px;
           width: 100%;
-          font-size: 16px;
+          font-size: 14px;
           background-color: #ded6fa;
           cursor: pointer;
           border-radius: 99999999999px;
