@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Setter Soft</title>
+    </head>
+
+    <body>
+        <form enctype="multipart/form-data" method="post" class="flex flex-col gap-2 w-full max-w-xl my-4 p-6 mx-auto">
+            <h1 class="text-2xl font-semibold text-center">Create a new model</h1>
+            <div class="flex gap-1 flex-col">
+                <label for="personality">Personality</label>
+                <textarea name="personality" id="personality" class="resize-none min-w-0 p-2 bg-slate-100 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-300 text-sm" rows="5" required></textarea>
+            </div>
+            <div class="flex gap-1 flex-col">
+                <label for="model">Model</label>
+                <select name="model" id="model" class="min-w-0 p-2 bg-slate-100 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-300" required>
+                    <option value="" selected>-- Select --</option>
+                    <option value="gpt-3.5-turbo">gpt-3.5-turbo</option>
+                    <option value="gpt-4">gpt-4</option>
+                    <option value="gpt-4-vision-preview">gpt-4-vision-preview</option>
+                    <option value="gpt-4-1106-preview">gpt-4-1106-preview</option>
+                    <option value="gpt-4-turbo-preview">gpt-4-turbo-preview</option>
+                    <option value="gpt-4-0125-preview">gpt-4-0125-preview</option>
+                </select>
+            </div>
+            <div class="flex gap-1 flex-col relative" id="steps">
+                <button type="button" id="add-step" class="absolute bottom-1 -right-6 transform  translate-x-1/2 text-xl font-semibold cursor-pointer rounded-full bg-slate-200 h-8 w-8 hover:bg-slate-300 transition-all duration-300 ease-in-out">+</button>
+                <p>Steps:</p>
+                <div class="flex gap-1 flex-row w-full items-center">
+                    <label for="step-1">1.</label>
+                    <input type="text" name="step-1" id="step-1" class="min-w-0 w-full p-2 bg-slate-100 rounded-md focus:outline-none focus:ring-2 focus:ring-slate-300" required/>
+                </div>
+            </div>
+            <button type="submit" class="py-2 px-4 bg-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300 ease-in-out self-end">Submit</button>
+        </form>
+    </body>
+
+    <script>
+        /** @type {HTMLFormElement} */
+        const $form = document.querySelector('form');
+        /** @type {HTMLDivElement[]} */
+        const $steps = document.querySelector('#steps');
+        /** @type {HTMLButtonElement} */
+        const $addStep = document.querySelector('#add-step');
+
+        $form.addEventListener('submit', handleSubmit);
+        $addStep.addEventListener('click', handleAddStep);
+
+        /** @param {SubmitEvent} e */
+        async function handleSubmit(e) {
+            e.preventDefault();
+
+            /** @type {{GPTModel: string, personality: string, steps: string[]}} */
+            const body = {
+                GPTModel: $form.model.value,
+                personality: $form.personality.value,
+                steps: []
+            }
+
+            $steps.querySelectorAll('input').forEach((input) => {
+                body.steps.push(input.value);
+            });
+
+            try {
+                const response = await fetch("/tools/upload-model", {
+                    method: $form.method,
+                    body: JSON.stringify(body),
+                });
+
+                if (!response.ok) throw new Error("File upload failed");
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
+        function handleAddStep(e) {
+            const id = document.querySelectorAll('input').length;
+            const $input = document.createElement('input');
+            $input.type = 'text';
+            $input.name = `step-${id}`;
+            $input.id = `step-${id}`;
+            $input.classList.add('min-w-0', 'w-full', 'p-2', 'bg-slate-100', 'rounded-md', 'focus:outline-none', 'focus:ring-2', 'focus:ring-slate-300');
+
+            const $label = document.createElement('label');
+            $label.htmlFor = `step-${id}`;
+            $label.innerText = `${id}.`;
+
+            const $container = document.createElement('div');
+            $container.classList.add('flex', 'gap-1', 'flex-row', 'w-full', 'items-center');
+
+            $container.append($label, $input);
+
+            $steps.append($container);
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</html>
