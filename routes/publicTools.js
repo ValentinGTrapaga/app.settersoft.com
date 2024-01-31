@@ -142,16 +142,4 @@ router.post(
   }
 )
 
-router.get('/en/upload-model', async (req, res) => {
-  res.render('public_tools/vsl_upload_model_en')
-})
-
-router.get('/es/upload-model', async (req, res) => {
-  res.render('public_tools/vsl_upload_model_es')
-})
-
-router.post('/upload-model', async (req, res) => {
-  res.send(req.body)
-})
-
 module.exports = router
