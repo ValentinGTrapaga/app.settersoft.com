@@ -1,4 +1,3 @@
-/* eslint-disable space-before-function-paren */
 require('dotenv').config()
 const OpenAI = require('openai')
 const openai = new OpenAI()
